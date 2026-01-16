@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabasees
+    hostname: metabase
+    volumes:
+      - ./metabase:/data/metabase
+    ports:
+      - 3080:3000
+    networks:
+      - metanet1
+    healthcheck:
+      test: curl --fail -I http://localhost:3080/api/health || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    hostname: postgresees
+    environment:
+      POSTGRES_USER: arthur
+      POSTGRES_PASSWORD: 146a
+      POSTGRES_DB: db_arthur
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    ports:
+      - "5430:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data/pgdata
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - metanet1
+
+networks:
+  metanet1:
+    driver: bridge
