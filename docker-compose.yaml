@@ -3,7 +3,7 @@ version: '3.9'
 services:
   metabase:
     image: metabase/metabase:latest
-    container_name: metabasees
+    container_name: metabasees_neww
     hostname: metabase
     volumes:
       - ./metabase:/data/metabase

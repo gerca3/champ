@@ -5,7 +5,7 @@ geopandas
 gpxpy
 shapely
 matplotlib
-psycopg2
 psycopg2-binary
 opencv-python
 contextily
+geopy
